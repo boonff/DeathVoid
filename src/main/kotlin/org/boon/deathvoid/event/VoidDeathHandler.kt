@@ -23,9 +23,9 @@ object VoidDeathHandler {
         // 玩家复活事件
         ServerPlayerEvents.AFTER_RESPAWN.register(AfterRespawn { oldPlayer: ServerPlayerEntity?, newPlayer: ServerPlayerEntity?, alive: Boolean ->
             if (voidDeathMap.getOrDefault(oldPlayer, false) == true) {
-                val stack = ItemStack(Items.DIAMOND, 1)
+                val stack = ItemStack(Items.ENDER_PEARL, 1)
                 newPlayer!!.getInventory().insertStack(stack)
-                newPlayer.sendMessage(Text.of("掉入虚空，复活后获得了钻石！"), false)
+                newPlayer.sendMessage(Text.of("掉入虚空，复活后获得了末影珍珠！"), false)
                 voidDeathMap.remove(oldPlayer)
             }
         })
