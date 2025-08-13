@@ -1,5 +1,6 @@
 package org.boon.deathvoid.mixin;
 
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import org.apache.logging.log4j.Level;
@@ -11,19 +12,26 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(PlayerEntity.class)
+@Mixin(LivingEntity.class)
 public abstract class PlayerDeathMixin {
 
-    private static  final String ClassName = PlayerDeathMixin.class.toString();
-    private static final Logger LOGGER = LogManager.getLogger(ClassName);
+    private static final Logger LOGGER = LogManager.getLogger(PlayerDeathMixin.class);
 
-    /**
-     * 注入到玩家死亡方法前
-     */
-    @Inject(method = "onDeath", at = @At("HEAD"))
-    private void onPlayerDeath(DamageSource source, CallbackInfo info) {
-        Configurator.setLevel(ClassName, Level.DEBUG);
-        LOGGER.info("玩家死亡！伤害来源: " + source.getName());
-        // 如果想做更多操作，可以在这里调用其他事件处理
+    static {
+        System.out.println("PlayerDeathMixin类已加载！");
+        LogManager.getLogger("MixinDebug").info("PlayerDeathMixin已初始化");
+    }
+
+    @Inject(
+            method = "onDeath",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/damage/DamageSource;getAttacker()Lnet/minecraft/entity/Entity;"),
+            cancellable = false
+    )
+    private void onEntityDeath(DamageSource source, CallbackInfo info) {
+        LivingEntity self = (LivingEntity)(Object)this; // 强制转换到被混入的实体
+        if (self instanceof PlayerEntity) {
+            LOGGER.info("玩家死亡！伤害来源: " + source.getName());
+        }
     }
 }
+
