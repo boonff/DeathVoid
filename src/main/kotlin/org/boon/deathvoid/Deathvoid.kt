@@ -9,5 +9,6 @@ class Deathvoid : ModInitializer {
 
     override fun onInitialize() {
         PlayerDeathListener.register()
+        VoidDeathHandler.init()
     }
 }
