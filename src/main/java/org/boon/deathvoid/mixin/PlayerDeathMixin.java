@@ -1,39 +1,36 @@
 package org.boon.deathvoid.mixin;
 
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.player.PlayerEntity;
-import org.apache.logging.log4j.Level;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.Text;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.config.Configurator;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(LivingEntity.class)
+@Mixin(ServerPlayerEntity.class)
 public abstract class PlayerDeathMixin {
-    @Unique
-    private static final String ClassName = "PlayerDeathMixin";
-    @Unique
-    private static final Logger LOGGER = LogManager.getLogger(ClassName);
 
-    static {
-        LogManager.getLogger("MixinDebug").info("PlayerDeathMixin已初始化");
-    }
+    private static final Logger LOGGER = LogManager.getLogger("PlayerVoidDeathMixin");
 
-    @Inject(method = "onDeath", at = @At("HEAD"))
-    private void onEntityDeath(DamageSource source, CallbackInfo ci) {
-        LOGGER.info("任何实体死亡触发: " + ((LivingEntity)(Object)this).getName().getString());
-    }
-
-    @Inject(method = "onDeath", at = @At("HEAD"))
+    @Inject(method = "onDeath(Lnet/minecraft/entity/damage/DamageSource;)V", at = @At("HEAD"))
     private void onPlayerDeath(DamageSource source, CallbackInfo ci) {
-        LOGGER.info("玩家死亡！伤害来源: " + source.getName());
+        ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
+
+        LOGGER.info("玩家死亡触发，原因: " + source.getName());
+
+        // 检测虚空死亡
+        if ("outOfWorld".equals(source.getName())) {
+            // 给物品
+            ItemStack stack = new ItemStack(Items.DIAMOND, 1);
+            player.getInventory().insertStack(stack);
+            player.sendMessage(Text.of("掉入虚空，获得了钻石！"), false);
+
+        }
     }
-
-
 }
-
