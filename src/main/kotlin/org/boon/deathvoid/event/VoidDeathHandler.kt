@@ -1,14 +1,12 @@
-import net.fabricmc.api.EnvType
+package org.boon.deathvoid.event
+
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents.AfterRespawn
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents.AllowDeath
-import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.server.network.ServerPlayerEntity
-import net.minecraft.text.Text
 import org.apache.logging.log4j.LogManager
-import org.slf4j.LoggerFactory
 
 object VoidDeathHandler {
     // 标记玩家虚空死亡

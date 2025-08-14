@@ -1,3 +1,5 @@
+package org.boon.deathvoid.event
+
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents.AllowDeath
 import net.minecraft.block.Block
@@ -6,7 +8,6 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.registry.Registry
 import org.apache.logging.log4j.LogManager
-import kotlin.math.log
 
 object FelPumpkinSummon {
     val logger = LogManager.getLogger("FelPumpkinSummon")!!
