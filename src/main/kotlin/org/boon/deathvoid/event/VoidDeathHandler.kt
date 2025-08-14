@@ -7,18 +7,19 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.text.Text
+import org.apache.logging.log4j.LogManager
 import org.slf4j.LoggerFactory
 
 object VoidDeathHandler {
     // 标记玩家虚空死亡
-    val LOGGER = LoggerFactory.getLogger("VoidDeathHandler")
+    val logger = LogManager.getLogger("VoidDeathHandler")!!
     private val voidDeathMap: MutableMap<ServerPlayerEntity?, Boolean?> = HashMap()
 
     fun init() {
         // 玩家死亡事件，标记虚空死亡
         ServerPlayerEvents.ALLOW_DEATH.register(AllowDeath { player, damageSource, amount->
             if ("outOfWorld" == damageSource!!.getName()) {
-                voidDeathMap.put(player, true)
+                voidDeathMap[player] = true
             }
             true
         })
@@ -27,9 +28,8 @@ object VoidDeathHandler {
         ServerPlayerEvents.AFTER_RESPAWN.register(AfterRespawn { oldPlayer, newPlayer, alive ->
             if (voidDeathMap.getOrDefault(oldPlayer, false) == true) {
                 val stack = ItemStack(Items.ENDER_PEARL, 1)
-                newPlayer!!.inventory.insertStack(stack)
-                newPlayer.sendMessage(Text.of("掉入虚空，复活后获得了末影珍珠！"), false)
                 voidDeathMap.remove(oldPlayer)
+                logger.info("掉入虚空，复活后获得了末影珍珠！")
             }
         })
     }
