@@ -15,7 +15,8 @@
     ],
     "main": [
       "org.boon.deathvoid.Deathvoid"
-    ]
+    ],
+    "fabric-datagen": ["org.boon.deathvoid.Deathvoid"]
   },
   "mixins": [
     "deathvoid.mixins.json",
