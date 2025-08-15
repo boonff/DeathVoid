@@ -9,7 +9,7 @@ import org.boon.deathvoid.recipe.CoarseDirtRecipeGenerator
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 
-class Deathvoid : ModInitializer, DataGeneratorEntrypoint{
+class Deathvoid : ModInitializer{
 
     companion object{
         const val MOD_ID = "deathvoid"
@@ -21,9 +21,5 @@ class Deathvoid : ModInitializer, DataGeneratorEntrypoint{
             FelPumpkinSummon.init()
             BoneMealKelp.init()
         }
-    }
-
-    override fun onInitializeDataGenerator(fabricDataGenerator: FabricDataGenerator) {
-        fabricDataGenerator.addProvider(::CoarseDirtRecipeGenerator)
     }
 }
