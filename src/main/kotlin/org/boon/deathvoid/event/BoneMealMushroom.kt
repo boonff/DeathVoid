@@ -1,5 +1,6 @@
 package org.boon.deathvoid.event
 
+import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup.world
 import net.minecraft.block.Blocks
