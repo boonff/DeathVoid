@@ -23,22 +23,19 @@ object BoneMealKelp {
         UseBlockCallback.EVENT.register(UseBlockCallback { player, world, hand, hitResult ->
             val stack = player.getStackInHand(hand)
             if (stack.item != Items.BONE_MEAL) return@UseBlockCallback ActionResult.PASS
-
             val blockPos = hitResult.blockPos
-
-            logger.info("玩家 ${player.name.asString()} 使用骨粉在位置 $blockPos")
 
             if (world.isClient)
                 return@UseBlockCallback ActionResult.PASS
             if (trigger(world, blockPos)) {
+                logger.info("玩家 ${player.name.asString()} 使用骨粉在位置 $blockPos")
                 ripening(world, blockPos, Random.nextInt(30, 45))
                 lightSound(world, blockPos)
+                stack.decrement(1) // 消耗骨粉
+                logger.info("消耗骨粉1，当前骨粉数量：${stack.count}")
                 return@UseBlockCallback ActionResult.SUCCESS
             } else
                 return@UseBlockCallback ActionResult.PASS
-
-//            stack.decrement(1) // 消耗骨粉
-//            logger.info("消耗骨粉1，当前骨粉数量：${stack.count}")
 
 
         })
