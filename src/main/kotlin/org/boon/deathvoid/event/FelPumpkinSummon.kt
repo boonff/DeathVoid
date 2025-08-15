@@ -8,6 +8,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.registry.Registry
 import org.apache.logging.log4j.LogManager
+import org.boon.deathvoid.util.Random.roll
 
 object FelPumpkinSummon {
     val logger = LogManager.getLogger("FelPumpkinSummon")!!
@@ -61,9 +62,6 @@ object FelPumpkinSummon {
         })
     }
 
-    private fun roll(percent: Float = 0.5f): Boolean {
-        require(percent in 0.0..1.0) { "percent 必须在 0 到 100 之间" }
-        return Math.random()  < percent
-    }
+
 
 }
