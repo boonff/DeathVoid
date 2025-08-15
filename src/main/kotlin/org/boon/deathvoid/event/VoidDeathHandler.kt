@@ -26,6 +26,7 @@ object VoidDeathHandler {
         ServerPlayerEvents.AFTER_RESPAWN.register(AfterRespawn { oldPlayer, newPlayer, alive ->
             if (voidDeathMap.getOrDefault(oldPlayer, false) == true) {
                 val stack = ItemStack(Items.ENDER_PEARL, 1)
+                newPlayer!!.getInventory().insertStack(stack)
                 voidDeathMap.remove(oldPlayer)
                 logger.info("掉入虚空，复活后获得了末影珍珠！")
             }
