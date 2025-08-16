@@ -41,21 +41,38 @@ fabricApi {
 }
 
 repositories {
-    // Add repositories to retrieve artifacts from in here.
-    // You should only use this when depending on other mods because
-    // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-    // See https://docs.gradle.org/current/userguide/declaring_repositories.html
-    // for more information about repositories.
+    maven { url = uri("https://maven.jamieswhiteshirt.com/libs-release/") }
+    maven { url = uri("https://maven.ladysnake.org/releases/") }
+    maven { url = uri("https://mvnrepository.com/artifact/") }
+    maven { url = uri("https://maven.fabricmc.net/") }        // Fabric 官方
+    maven { url = uri("https://maven.terraformersmc.com/releases/") } // TerraformersMC
+    maven { url = uri("https://maven.blamejared.com/") }      // BlameJared
+    maven { url = uri("https://libraries.minecraft.net/") }   // Minecraft 官方
+    maven { url = uri("https://jitpack.io") }                // JitPack
+    mavenCentral()                                          // Gradle 中央仓库
 }
 
 dependencies {
-    // To change the versions see the gradle.properties file
     minecraft("com.mojang:minecraft:${project.property("minecraft_version")}")
     mappings("net.fabricmc:yarn:${project.property("yarn_mappings")}:v2")
     modImplementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
     modImplementation("net.fabricmc:fabric-language-kotlin:${project.property("kotlin_loader_version")}")
 
-    modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
+    // Botania
+    modImplementation("vazkii.botania:Botania:1.18.2-435-FABRIC") {
+        isTransitive = true  // 让 Gradle 自动解析附属依赖
+    }
+
+    // Trinkets
+    modImplementation("dev.emi:trinkets:3.3.0") {
+        isTransitive = true
+    }
+
+    // 如果还是缺 Cardinal Components，可以手动加一份备用
+    modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:4.1.3")
+    modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:4.1.3")
+    modImplementation("com.jamieswhiteshirt:reach-entity-attributes:2.1.1")
 }
 
 tasks.processResources {
