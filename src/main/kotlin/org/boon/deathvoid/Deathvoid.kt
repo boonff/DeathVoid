@@ -8,6 +8,7 @@ import org.boon.deathvoid.event.BoneMealKelp
 import org.boon.deathvoid.event.BoneMealMushroom
 import org.boon.deathvoid.event.FelPumpkinSummon
 import org.boon.deathvoid.event.VoidDeathHandler
+import org.boon.deathvoid.lootTable.MagicOreFlower
 
 class Deathvoid : ModInitializer {
     override fun onInitialize() {
@@ -16,6 +17,7 @@ class Deathvoid : ModInitializer {
             FelPumpkinSummon.init()
             BoneMealKelp.init()
             BoneMealMushroom.init()
+            MagicOreFlower.registerLootTable()
         }
 
     }
