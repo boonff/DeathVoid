@@ -1,0 +1,9 @@
+{
+  "type": "botania:orechid",
+  "input": "minecraft:sand",
+  "output": {
+    "type": "block",
+    "block": "ad_astra:mars_sand"
+  },
+  "weight": 250
+}
